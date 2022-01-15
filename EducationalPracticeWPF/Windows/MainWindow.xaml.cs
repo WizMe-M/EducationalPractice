@@ -22,9 +22,9 @@ namespace EducationalPracticeWPF.Windows
 
         private void ButtonEmployee_Click(object sender, RoutedEventArgs e)
         {
-            // var employees = new EmployeeTableWindow(_database);
-            // employees.Show();
-            // Hide();
+            var employees = new EmployeeTableWindow(_database);
+            employees.Show();
+            Hide();
         }
 
 

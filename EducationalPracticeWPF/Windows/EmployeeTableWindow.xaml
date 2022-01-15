@@ -1,0 +1,78 @@
+﻿<Window x:Class="EducationalPracticeWPF.Windows.EmployeeTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:EducationalPracticeWPF.Windows"
+        mc:Ignorable="d"
+        Title="EmployeeTableWindow"
+        Height="650"
+        Width="1000"
+        Closed="EmployeeTableWindow_OnClosed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.05*" />
+            <ColumnDefinition Width="1.7*"/>
+        </Grid.ColumnDefinitions>
+        
+        <DataGrid
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Grid.Column="0"
+            x:Name="EmployeeDataGrid"
+            ItemsSource="{Binding}" 
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Имя"/> 
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия"/> 
+                <DataGridTextColumn Binding="{Binding MiddleName}" Header="Отчество"/> 
+                <DataGridTextColumn Binding="{Binding PassportSeries}" Header="Серия"/> 
+                <DataGridTextColumn Binding="{Binding PassportNumber}" Header="Номер"/> 
+                <DataGridTextColumn Binding="{Binding Inn}" Header="ИНН"/> 
+                <DataGridTemplateColumn Header="Должность" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!-- Здесь привязка работает к элементу коллекции. У элемента коллекции есть свойство PhoneParam. К нему мы и привязываем выбранный элемент -->
+                            <!-- Однако у элемента коллекции отсутствует перечень всех доступных параметров, зато он есть у контекста данных родительского элемента (окна). -->
+                            <!-- Поэтому мы привязываемся к свойству родительского элемента с типом Window   -->
+                            <!-- DisplayMemberPath показывает значение свойства вместо строкового представления самого объекта -->
+                            <!-- Он нужен для того, чтобы выводить понятное пользователю наименование -->
+                            <ComboBox ItemsSource="{Binding Posts, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                      SelectedItem="{Binding Post}" 
+                                      DisplayMemberPath="Naming"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+            Grid.Row="1"
+            Grid.Column="0" 
+            Content="Добавить"/>
+        <Button
+            Grid.Row="1"
+            Grid.Column="1" 
+            Content="Изменить"/>
+        <Button
+            Grid.Row="1"
+            Grid.Column="2" 
+            Content="Удалить"/>
+        
+        <Grid
+            Grid.RowSpan="2"
+            Grid.Row="0"
+            Grid.Column="4"
+            Background="GhostWhite">
+            
+        </Grid>
+    </Grid>
+</Window>
