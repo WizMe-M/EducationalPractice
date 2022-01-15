@@ -1,0 +1,87 @@
+﻿<Window x:Class="EducationalPracticeWPF.Windows.PostTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:EducationalPracticeWPF.Windows"
+        mc:Ignorable="d"
+        Title="Должности" 
+        Height="600" 
+        Width="350"
+        Closed="PostTableWindow_OnClosed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            x:Name="PostDataGrid"
+            Margin="5"
+            ItemsSource="{Binding}"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Naming}" Header="Наименование" Width="200"/>
+                <DataGridTextColumn Binding="{Binding Salary}" Header="Оклад" Width="115"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            Content="Добавить" 
+            Click="ButtonAddPost_Click"/>
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Content="Удалить" 
+            Click="ButtonDeletePost_Click"/>
+
+        <Grid
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Background="GhostWhite">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBox
+                Grid.Row="0"
+                x:Name="PostNaming"
+                FontSize="16"
+                Width="200"
+                Height="30" 
+                VerticalContentAlignment="Bottom"
+                MaxLength="100"
+                Text="Наименование"/>
+
+            <TextBox
+                Grid.Row="1"
+                x:Name="PostSalary"
+                FontSize="16"
+                Width="200"
+                Height="30" 
+                VerticalContentAlignment="Bottom"
+                MaxLength="100"
+                Text="Оклад" />
+        </Grid>
+    </Grid>
+</Window>
