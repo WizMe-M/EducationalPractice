@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EducationalPracticeWPF"
         mc:Ignorable="d"
-        Loaded="MainWindow_OnLoaded"
         Title="Магазин музыкальных инструментов"
         Height="800"
         Width="450">
@@ -56,16 +55,20 @@
             Click="ButtonPost_Click"/>
         <Button
             Grid.Row="3"
-            Content="Покупатели" />
+            Content="Покупатели" 
+            Click="ButtonCustomer_Click"/>
         <Button
             Grid.Row="4"
-            Content="Товары" />
+            Content="Товары" 
+            Click="ButtonProduct_Click"/>
         <Button
             Grid.Row="5"
-            Content="Типы товаров" />
+            Content="Типы товаров" 
+            Click="ButtonProductType_Click"/>
         <Button
             Grid.Row="6"
-            Content="Цвета" />
+            Content="Цвета" 
+            Click="ButtonColor_Click"/>
         <Button
             Grid.Row="7"
             Content="Способы оплаты" />

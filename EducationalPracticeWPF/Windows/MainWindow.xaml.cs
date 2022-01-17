@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using EducationalPracticeWPF.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EducationalPracticeWPF.Windows
 {
@@ -8,21 +9,16 @@ namespace EducationalPracticeWPF.Windows
     /// </summary>
     public partial class MainWindow
     {
-        private EducationalPracticeContext _database = null!; 
-        
+        private readonly DbContextOptions<EducationalPracticeContext> _options;
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            _database = DatabaseManager.InitDatabase();
+            _options = DatabaseManager.GetOptions();
         }
 
         private void ButtonEmployee_Click(object sender, RoutedEventArgs e)
         {
-            var employees = new EmployeeTableWindow(_database);
+            var employees = new EmployeeTableWindow(_options);
             employees.Show();
             Hide();
         }
@@ -30,9 +26,33 @@ namespace EducationalPracticeWPF.Windows
 
         private void ButtonPost_Click(object sender, RoutedEventArgs e)
         {
-            var posts = new PostTableWindow(_database);
+            var posts = new PostTableWindow(_options);
             posts.Show();
             Hide();
+        }
+
+        private void ButtonCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            var customers = new CustomerTableWindow(_options);
+            customers.Show();
+            Hide();
+        }
+
+        private void ButtonProductType_Click(object sender, RoutedEventArgs e)
+        {
+            var productTypes = new ProductTypeTableWindow(_options);
+            productTypes.Show();
+            Hide();
+        }
+
+        private void ButtonColor_Click(object sender, RoutedEventArgs e)
+        {
+            // var colors;
+        }
+
+        private void ButtonProduct_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

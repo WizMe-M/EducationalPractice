@@ -1,0 +1,89 @@
+﻿<Window x:Class="EducationalPracticeWPF.Windows.ProductTypeTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="Виды товаров"
+        Height="600"
+        Width="350"
+        Closed="ProductTypeTableWindow_OnClosed">
+    
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <TextBox
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Grid.Column="0"
+            x:Name="ProductTypeNamingTB"
+            FontSize="16"
+            Width="250"
+            Height="30"
+            VerticalContentAlignment="Bottom"
+            MaxLength="100"
+            Text="Наименование" />
+
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Grid.Column="0"
+            x:Name="ProductTypeDataGrid"
+            Margin="5"
+            ItemsSource="{Binding}"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            CanUserReorderColumns="False"
+            SelectionChanged="ProductTypeDataGrid_OnSelectionChanged">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Naming}" Header="Наименование вида товара" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            Content="Добавить"
+            Click="ButtonAddProductType_Click" />
+        
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Content="Сохранить"
+            Click="ButtonEditProductType_Click" />
+        
+        <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            Content="Удалить"
+            Click="ButtonDeleteProductType_Click" />
+    </Grid>
+</Window>

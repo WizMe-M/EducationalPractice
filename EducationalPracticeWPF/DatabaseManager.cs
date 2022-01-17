@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections;
+using System.Configuration;
 using EducationalPracticeWPF.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +12,14 @@ namespace EducationalPracticeWPF
             return ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
         }
 
+        public static DbContextOptions<EducationalPracticeContext> GetOptions()
+        {
+            return new DbContextOptionsBuilder<EducationalPracticeContext>().Options;
+        }
+        
         public static EducationalPracticeContext InitDatabase()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<EducationalPracticeContext>();
-            var options = optionsBuilder.Options;
-            return new EducationalPracticeContext(options);
+            return new EducationalPracticeContext(GetOptions());
         }
     }
 }

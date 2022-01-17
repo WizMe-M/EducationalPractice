@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\App.xaml
-31887576295
+5342102291
 
-16388396653
+181619608922
 2141351651283
-Windows\EmployeeTableWindow.xaml;Windows\MainWindow.xaml;Windows\PostTableWindow.xaml;
+Windows\CustomerTableWindow.xaml;Windows\EmployeeTableWindow.xaml;Windows\MainWindow.xaml;Windows\PostTableWindow.xaml;Windows\ProductTypeTableWindow.xaml;
 
 False
 

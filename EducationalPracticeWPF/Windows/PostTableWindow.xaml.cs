@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using EducationalPracticeWPF.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,31 +16,52 @@ namespace EducationalPracticeWPF.Windows
             InitializeComponent();
         }
 
-        public PostTableWindow(EducationalPracticeContext context) : this()
+        public PostTableWindow(DbContextOptions<EducationalPracticeContext> options) : this()
         {
-            _database = context;
+            _database = new EducationalPracticeContext(options);
             _database.Posts.Load();
             PostDataGrid.ItemsSource = _database.Posts.Local.ToBindingList();
         }
 
-        private void ButtonAddPost_Click(object sender, RoutedEventArgs e)
+        private async void ButtonAddPost_Click(object sender, RoutedEventArgs e)
         {
             var post = new Post
             {
                 Naming = PostNaming.Text,
                 Salary = decimal.Parse(PostSalary.Text)
             };
+            
             _database.Posts.Add(post);
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
         }
 
-        private void ButtonDeletePost_Click(object sender, RoutedEventArgs e)
+        private async void ButtonEditPost_Click(object sender, RoutedEventArgs e)
         {
-            var selected = (Post)PostDataGrid.SelectedItem;
-            _database.Posts.Remove(selected);
-            _database.SaveChanges();
+            if (PostDataGrid.SelectedItem is not Post selected) return;
+
+            selected.Naming = PostNaming.Text;
+            selected.Salary = decimal.Parse(PostSalary.Text);
+            
+            _database.Posts.Update(selected);
+            await _database.SaveChangesAsync();
+            PostDataGrid.Items.Refresh();
         }
 
+        private async void ButtonDeletePost_Click(object sender, RoutedEventArgs e)
+        {
+            if(PostDataGrid.SelectedItem is not Post selected) return;
+            
+            _database.Posts.Remove(selected);
+            await _database.SaveChangesAsync();
+        }
+
+        private void PostDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PostDataGrid.SelectedItem is not Post selected) return;
+
+            PostNaming.Text = selected.Naming;
+            PostSalary.Text = selected.Salary.ToString();
+        }
 
         private void PostTableWindow_OnClosed(object? sender, EventArgs e)
         {
