@@ -47,12 +47,16 @@ namespace EducationalPracticeWPF.Windows
 
         private void ButtonColor_Click(object sender, RoutedEventArgs e)
         {
-            // var colors;
+            var colors = new ColorTableWindow(_options);
+            colors.Show();
+            Hide();
         }
 
         private void ButtonProduct_Click(object sender, RoutedEventArgs e)
         {
-            
+            var products = new ProductTableWindow(_options);
+            products.Show();
+            Hide();
         }
     }
 }

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
-
-namespace EducationalPracticeWPF
+﻿namespace EducationalPracticeWPF.Models
 {
-    public partial class ProductsInReceipt
+    public class ProductsInReceipt
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
         public int ReceiptId { get; set; }
         public int ProductCount { get; set; }
 
-        public virtual Product Product { get; set; }
-        public virtual Receipt Receipt { get; set; }
+        public Product Product { get; set; }
+        public Receipt Receipt { get; set; }
     }
 }

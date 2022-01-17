@@ -11,27 +11,20 @@ namespace EducationalPracticeWPF.Windows
     {
         private readonly EducationalPracticeContext _database;
 
-        public EmployeeTableWindow()
+        public EmployeeTableWindow(DbContextOptions<EducationalPracticeContext> options)
         {
             InitializeComponent();
-        }
-
-        public EmployeeTableWindow(DbContextOptions<EducationalPracticeContext> options) : this()
-        {
+            
             _database = new EducationalPracticeContext(options);
-
             _database.Employees.Load();
             _database.Posts.Load();
+            
             EmployeeDataGrid.ItemsSource = _database.Employees.Local.ToBindingList();
-            Posts = _database.Posts.Local.ToBindingList();
-
-            PostsCB.ItemsSource = Posts;
+            PostsCB.ItemsSource = _database.Posts.Local.ToBindingList();
             PostsCB.DisplayMemberPath = nameof(Post.Naming);
             PostsCB.SelectedValuePath = nameof(Post.Id);
         }
-
-        public BindingList<Post> Posts { get; }
-
+        
         private void EmployeeTableWindow_OnClosed(object? sender, EventArgs e)
         {
             EmployeeDataGrid.CancelEdit();
@@ -49,7 +42,7 @@ namespace EducationalPracticeWPF.Windows
                 PassportSeries = SeriesPassportTB.Text,
                 PassportNumber = NumberPasswordTB.Text,
                 Inn = InnTB.Text,
-                PostId = (int)PostsCB.SelectedValue
+                Post = (Post)PostsCB.SelectedItem
             };
 
             _database.Employees.Add(employee);
@@ -59,26 +52,26 @@ namespace EducationalPracticeWPF.Windows
         private async void ButtonEditEmployee_Click(object sender, RoutedEventArgs e)
         {
             await _database.SaveChangesAsync();
-            if (EmployeeDataGrid.SelectedItem is not Employee edited) return;
+            if (EmployeeDataGrid.SelectedItem is not Employee selected) return;
 
-            edited.FirstName = FirstNameTB.Text;
-            edited.LastName = LastNameTB.Text;
-            edited.MiddleName = MiddleNameTB.Text;
-            edited.PassportSeries = SeriesPassportTB.Text;
-            edited.PassportNumber = NumberPasswordTB.Text;
-            edited.Inn = InnTB.Text;
-            edited.PostId = (int)PostsCB.SelectedValue;
+            selected.FirstName = FirstNameTB.Text;
+            selected.LastName = LastNameTB.Text;
+            selected.MiddleName = MiddleNameTB.Text;
+            selected.PassportSeries = SeriesPassportTB.Text;
+            selected.PassportNumber = NumberPasswordTB.Text;
+            selected.Inn = InnTB.Text;
+            selected.Post = (Post)PostsCB.SelectedItem;
 
-            _database.Employees.Update(edited);
+            _database.Employees.Update(selected);
             await _database.SaveChangesAsync();
             EmployeeDataGrid.Items.Refresh();
         }
 
         private async void ButtonDeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            if(EmployeeDataGrid.SelectedItem is not Employee employee) return;
+            if(EmployeeDataGrid.SelectedItem is not Employee selected) return;
             
-            _database.Employees.Remove(employee);
+            _database.Employees.Remove(selected);
             await _database.SaveChangesAsync();
         }
 

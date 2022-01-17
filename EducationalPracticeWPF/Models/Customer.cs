@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-#nullable disable
-
 namespace EducationalPracticeWPF.Models
 {
     public class Customer
@@ -16,6 +14,6 @@ namespace EducationalPracticeWPF.Models
         public string LastName { get; set; }
         public string Phone { get; set; }
 
-        public virtual ICollection<Receipt> Receipts { get; set; }
+        public ICollection<Receipt> Receipts { get; set; }
     }
 }

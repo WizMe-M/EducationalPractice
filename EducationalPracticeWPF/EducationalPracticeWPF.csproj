@@ -16,4 +16,8 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Windows\ReceiptTableWindow.xaml~" />
+    </ItemGroup>
+
 </Project>

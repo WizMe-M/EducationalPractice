@@ -68,3 +68,7 @@ C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-win
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\CustomerTableWindow.g.cs
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductTypeTableWindow.g.cs
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\CustomerTableWindow.baml
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ColorTableWindow.baml
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ColorTableWindow.g.cs
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductTableWindow.g.cs
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductTableWindow.baml

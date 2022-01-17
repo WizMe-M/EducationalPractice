@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-#nullable disable
-
-namespace EducationalPracticeWPF
+namespace EducationalPracticeWPF.Models
 {
-    public partial class ProductType
+    public class ProductType
     {
         public ProductType()
         {
@@ -15,6 +12,6 @@ namespace EducationalPracticeWPF
         public int Id { get; set; }
         public string Naming { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

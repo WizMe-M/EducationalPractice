@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-#nullable disable
-
 namespace EducationalPracticeWPF.Models
 {
     public class Color
@@ -14,6 +12,6 @@ namespace EducationalPracticeWPF.Models
         public int Id { get; set; }
         public string Naming { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

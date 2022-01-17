@@ -49,29 +49,36 @@
             Grid.Row="1"
             Content="Сотрудники"
             Click="ButtonEmployee_Click" />
+        
         <Button
             Grid.Row="2"
             Content="Должности" 
             Click="ButtonPost_Click"/>
+        
         <Button
             Grid.Row="3"
             Content="Покупатели" 
             Click="ButtonCustomer_Click"/>
+        
         <Button
             Grid.Row="4"
             Content="Товары" 
             Click="ButtonProduct_Click"/>
+        
         <Button
             Grid.Row="5"
             Content="Типы товаров" 
             Click="ButtonProductType_Click"/>
+        
         <Button
             Grid.Row="6"
             Content="Цвета" 
             Click="ButtonColor_Click"/>
+        
         <Button
             Grid.Row="7"
             Content="Способы оплаты" />
+        
         <Button
             Grid.Row="8"
             Content="Чеки" />
