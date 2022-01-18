@@ -45,7 +45,7 @@ namespace EducationalPracticeWPF.Windows
         {
             if (ProductTypeDataGrid.SelectedItem is not ProductType selected) return;
 
-            await _database.Posts.LoadAsync();
+            await _database.Products.LoadAsync();
             if (selected.Products.Count != 0)
             {
                 MessageBox.Show(
