@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using EducationalPracticeWPF.Models;
@@ -9,6 +11,7 @@ namespace EducationalPracticeWPF.Windows
     public partial class CustomerTableWindow
     {
         private readonly EducationalPracticeContext _database;
+
         public CustomerTableWindow()
         {
             InitializeComponent();
@@ -29,19 +32,19 @@ namespace EducationalPracticeWPF.Windows
                 LastName = LastNameTB.Text,
                 Phone = PhoneTB.Text
             };
-            
+
             _database.Customers.Add(customer);
             await _database.SaveChangesAsync();
         }
 
         private async void ButtonEditCustomer_Click(object sender, RoutedEventArgs e)
         {
-            if(CustomerDataGrid.SelectedItem is not Customer selected) return;
+            if (CustomerDataGrid.SelectedItem is not Customer selected) return;
 
             selected.FirstName = FirstNameTB.Text;
             selected.LastName = LastNameTB.Text;
             selected.Phone = PhoneTB.Text;
-            
+
             _database.Customers.Update(selected);
             await _database.SaveChangesAsync();
             CustomerDataGrid.Items.Refresh();
@@ -49,15 +52,15 @@ namespace EducationalPracticeWPF.Windows
 
         private async void ButtonDeleteCustomer_Click(object sender, RoutedEventArgs e)
         {
-            if(CustomerDataGrid.SelectedItem is not Customer selected) return;
-            
+            if (CustomerDataGrid.SelectedItem is not Customer selected) return;
+
             _database.Customers.Remove(selected);
             await _database.SaveChangesAsync();
         }
 
         private void CustomerDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(CustomerDataGrid.SelectedItem is not Customer selected) return;
+            if (CustomerDataGrid.SelectedItem is not Customer selected) return;
 
             FirstNameTB.Text = selected.FirstName;
             LastNameTB.Text = selected.LastName;
@@ -69,6 +72,25 @@ namespace EducationalPracticeWPF.Windows
             CustomerDataGrid.CancelEdit();
             CustomerDataGrid.CancelEdit();
             Application.Current.MainWindow!.Show();
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchTB.Text;
+            var filtered = new BindingList<Customer>();
+            var customers = _database.Customers.Where(с => с.FirstName.Contains(searchText)
+                                                          || с.LastName.Contains(searchText)
+                                                          || с.Phone.Contains(searchText));
+
+            foreach (var customer in customers)
+                filtered.Add(customer);
+
+            CustomerDataGrid.ItemsSource = filtered;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerDataGrid.ItemsSource = _database.Customers.Local.ToBindingList();
         }
     }
 }

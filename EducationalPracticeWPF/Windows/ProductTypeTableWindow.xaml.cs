@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using EducationalPracticeWPF.Models;
@@ -63,6 +65,23 @@ namespace EducationalPracticeWPF.Windows
             ProductTypeDataGrid.CancelEdit();
             ProductTypeDataGrid.CancelEdit();
             Application.Current.MainWindow!.Show();
+        }
+        
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchTB.Text;
+            var filtered = new BindingList<ProductType>();
+            var productTypes = _database.ProductTypes.Where(p => p.Naming.Contains(searchText));
+
+            foreach (var type in productTypes)
+                filtered.Add(type);
+
+            ProductTypeDataGrid.ItemsSource = filtered;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            ProductTypeDataGrid.ItemsSource = _database.ProductTypes.Local.ToBindingList();
         }
     }
 }

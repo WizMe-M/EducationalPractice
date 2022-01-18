@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +32,7 @@ namespace EducationalPracticeWPF.Windows
                 Naming = PostNaming.Text,
                 Salary = decimal.Parse(PostSalary.Text)
             };
-            
+
             _database.Posts.Add(post);
             await _database.SaveChangesAsync();
         }
@@ -41,7 +43,7 @@ namespace EducationalPracticeWPF.Windows
 
             selected.Naming = PostNaming.Text;
             selected.Salary = decimal.Parse(PostSalary.Text);
-            
+
             _database.Posts.Update(selected);
             await _database.SaveChangesAsync();
             PostDataGrid.Items.Refresh();
@@ -49,8 +51,8 @@ namespace EducationalPracticeWPF.Windows
 
         private async void ButtonDeletePost_Click(object sender, RoutedEventArgs e)
         {
-            if(PostDataGrid.SelectedItem is not Post selected) return;
-            
+            if (PostDataGrid.SelectedItem is not Post selected) return;
+
             _database.Posts.Remove(selected);
             await _database.SaveChangesAsync();
         }
@@ -68,6 +70,24 @@ namespace EducationalPracticeWPF.Windows
             PostDataGrid.CancelEdit();
             PostDataGrid.CancelEdit();
             Application.Current.MainWindow!.Show();
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchTB.Text;
+            var filtered = new BindingList<Post>();
+            var posts = _database.Posts.Where(p => p.Naming.Contains(searchText)
+                                                    || p.Salary.ToString() == searchText);
+
+            foreach (var post in posts)
+                filtered.Add(post);
+
+            PostDataGrid.ItemsSource = filtered;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            PostDataGrid.ItemsSource = _database.Posts.Local.ToBindingList();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using EducationalPracticeWPF.Models;
@@ -14,12 +15,12 @@ namespace EducationalPracticeWPF.Windows
         public ProductTableWindow(DbContextOptions<EducationalPracticeContext> options)
         {
             InitializeComponent();
-            
+
             _database = new EducationalPracticeContext(options);
             _database.Products.Load();
             _database.Colors.Load();
             _database.ProductTypes.Load();
-            
+
             ProductDataGrid.ItemsSource = _database.Products.Local.ToBindingList();
             ColorsCB.ItemsSource = _database.Colors.Local.ToBindingList();
             ColorsCB.DisplayMemberPath = nameof(Color.Naming);
@@ -43,7 +44,7 @@ namespace EducationalPracticeWPF.Windows
 
         private async void ButtonEditProduct_Click(object sender, RoutedEventArgs e)
         {
-            if(ProductDataGrid.SelectedItem is not Product selected) return;
+            if (ProductDataGrid.SelectedItem is not Product selected) return;
 
             selected.Naming = NamingTB.Text;
             selected.Price = decimal.Parse(PriceTB.Text);
@@ -57,8 +58,8 @@ namespace EducationalPracticeWPF.Windows
 
         private async void ButtonDeleteProduct_Click(object sender, RoutedEventArgs e)
         {
-            if(ProductDataGrid.SelectedItem is not Product selected) return;
-            
+            if (ProductDataGrid.SelectedItem is not Product selected) return;
+
             _database.Products.Remove(selected);
             await _database.SaveChangesAsync();
         }
@@ -78,6 +79,26 @@ namespace EducationalPracticeWPF.Windows
             ProductDataGrid.CancelEdit();
             ProductDataGrid.CancelEdit();
             Application.Current.MainWindow!.Show();
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchTB.Text;
+            var filtered = new BindingList<Product>();
+            var products = _database.Products.Where(p => p.Naming.Contains(searchText)
+                                                         || p.Color.Naming.Contains(searchText)
+                                                         || p.Price.ToString() == searchText
+                                                         || p.ProductType.Naming.Contains(searchText));
+
+            foreach (var product in products)
+                filtered.Add(product);
+
+            ProductDataGrid.ItemsSource = filtered;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            ProductDataGrid.ItemsSource = _database.Products.Local.ToBindingList();
         }
     }
 }

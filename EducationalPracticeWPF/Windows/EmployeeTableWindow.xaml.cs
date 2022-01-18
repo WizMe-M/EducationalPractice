@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using EducationalPracticeWPF.Models;
@@ -14,17 +15,17 @@ namespace EducationalPracticeWPF.Windows
         public EmployeeTableWindow(DbContextOptions<EducationalPracticeContext> options)
         {
             InitializeComponent();
-            
+
             _database = new EducationalPracticeContext(options);
             _database.Employees.Load();
             _database.Posts.Load();
-            
+
             EmployeeDataGrid.ItemsSource = _database.Employees.Local.ToBindingList();
             PostsCB.ItemsSource = _database.Posts.Local.ToBindingList();
             PostsCB.DisplayMemberPath = nameof(Post.Naming);
             PostsCB.SelectedValuePath = nameof(Post.Id);
         }
-        
+
         private void EmployeeTableWindow_OnClosed(object? sender, EventArgs e)
         {
             EmployeeDataGrid.CancelEdit();
@@ -69,8 +70,8 @@ namespace EducationalPracticeWPF.Windows
 
         private async void ButtonDeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            if(EmployeeDataGrid.SelectedItem is not Employee selected) return;
-            
+            if (EmployeeDataGrid.SelectedItem is not Employee selected) return;
+
             _database.Employees.Remove(selected);
             await _database.SaveChangesAsync();
         }
@@ -86,6 +87,29 @@ namespace EducationalPracticeWPF.Windows
             NumberPasswordTB.Text = selected.PassportNumber;
             InnTB.Text = selected.Inn;
             PostsCB.SelectedItem = selected.Post;
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchTB.Text;
+            var filtered = new BindingList<Employee>();
+            var employees = _database.Employees.Where(em => em.FirstName.Contains(searchText)
+                                                           || em.LastName.Contains(searchText)
+                                                           || em.MiddleName.Contains(searchText)
+                                                           || em.Inn.Contains(searchText)
+                                                           || em.Post.Naming.Contains(searchText)
+                                                           || em.PassportNumber == searchText
+                                                           || em.PassportSeries == searchText);
+
+            foreach (var customer in employees)
+                filtered.Add(customer);
+
+            EmployeeDataGrid.ItemsSource = filtered;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeDataGrid.ItemsSource = _database.Employees.Local.ToBindingList();
         }
     }
 }
