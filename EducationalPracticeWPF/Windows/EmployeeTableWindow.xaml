@@ -79,74 +79,96 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBox
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
+            <Grid
                 Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    Grid.Column="0"
+                    x:Name="SearchTB"
+                    Width="100"
+                    Text="Найти" />
+
+                <Button
+                    Grid.Column="1"
+                    Content="Найти" 
+                    Click="ButtonSearch_Click"/>
+
+                <Button
+                    Grid.Column="2"
+                    Content="Очистить" 
+                    Click="ButtonClear_Click"/>
+            </Grid>
+
+            
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
                 x:Name="LastNameTB" />
 
             <TextBox
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
-                Grid.Row="1"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
                 x:Name="FirstNameTB" />
 
             <TextBox
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
-                Grid.Row="2"
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
                 x:Name="MiddleNameTB" />
 
             <TextBox
-                Grid.Row="3"
-                Grid.Column="1"
+                Grid.Row="4"
+                Grid.Column="0"
                 Grid.ColumnSpan="2"
                 x:Name="SeriesPassportTB"
                 Width="100" />
 
             <TextBox
-                Grid.Row="3"
-                Grid.Column="3"
+                Grid.Row="4"
+                Grid.Column="1"
                 Grid.ColumnSpan="2"
                 x:Name="NumberPasswordTB"
                 Width="100" />
 
             <TextBox
-                Grid.Row="4"
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
                 x:Name="InnTB" />
 
             <ComboBox
-                Grid.Row="5"
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
                 x:Name="PostsCB" />
-
 
             <Button
                 Grid.Row="7"
                 Grid.Column="0"
-                Grid.ColumnSpan="2"
                 Content="Добавить"
                 Click="ButtonAddEmployee_Click" />
 
             <Button
                 Grid.Row="7"
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
+                Grid.Column="1"
                 Content="Сохранить"
                 Click="ButtonEditEmployee_Click" />
 
             <Button
                 Grid.Row="7"
-                Grid.Column="4"
-                Grid.ColumnSpan="2"
+                Grid.Column="2"
                 Content="Удалить"
                 Click="ButtonDeleteEmployee_Click" />
         </Grid>

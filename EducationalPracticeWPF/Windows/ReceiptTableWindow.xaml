@@ -4,11 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Title="Чеки" 
+        Title="Чеки"
         Height="650"
         Width="1200"
         Closed="ReceiptTableWindow_OnClosed">
-    
+
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Width" Value="250" />
@@ -48,7 +48,8 @@
             SelectionUnit="FullRow"
             SelectionChanged="ReceiptDataGrid_OnSelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding RegistrationDate, StringFormat=\{0:dd.MM.yyyy\}}" Header="Наименование" Width="*" />
+                <DataGridTextColumn Binding="{Binding RegistrationDate, StringFormat=\{0:dd.MM.yyyy\}}"
+                                    Header="Дата оформления" Width="*" />
                 <DataGridTextColumn Binding="{Binding TotalSum}" Header="Цена" Width="0.5*" />
                 <DataGridTextColumn Binding="{Binding Customer.Phone}" Header="Номер покупателя" Width="0.8*" />
                 <DataGridTextColumn Binding="{Binding Employee.Inn}" Header="ИНН сотрудника" Width="*" />
@@ -68,6 +69,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -76,16 +78,44 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <DatePicker
+            <Grid
                 Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    Grid.Column="0"
+                    x:Name="SearchTB"
+                    Width="100"
+                    Text="Найти" />
+
+                <Button
+                    Grid.Column="1"
+                    Content="Найти" 
+                    Click="ButtonSearch_Click"/>
+
+                <Button
+                    Grid.Column="2"
+                    Content="Очистить" 
+                    Click="ButtonClear_Click"/>
+            </Grid>
+
+            <DatePicker
+                Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 x:Name="RegistrationDatePicker"
                 Width="200"
-                Height="30"/>
+                Height="30" />
 
             <ComboBox
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 x:Name="CustomersCB">
@@ -94,27 +124,8 @@
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
-                                    <Binding Path="LastName"/>
-                                    <Binding Path="FirstName"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
-            <ComboBox
-                Grid.Row="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                x:Name="EmployeesCB">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1}">
-                                    <Binding Path="LastName"/>
-                                    <Binding Path="FirstName"/>
+                                    <Binding Path="LastName" />
+                                    <Binding Path="FirstName" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -126,30 +137,49 @@
                 Grid.Row="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                x:Name="PaymentMethodsCB"/>
+                x:Name="EmployeesCB">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="LastName" />
+                                    <Binding Path="FirstName" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <ComboBox
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                x:Name="PaymentMethodsCB" />
 
             <Button
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Content="Выбрать товары"
                 Width="150"
-                Click="ButtonAddProductsInReceipt_Click"/>
+                Click="ButtonAddProductsInReceipt_Click" />
 
             <Button
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="0"
                 Content="Добавить"
                 Click="ButtonAddReceipt_Click" />
 
             <Button
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="1"
                 Content="Сохранить"
                 Click="ButtonEditReceipt_Click" />
 
             <Button
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="2"
                 Content="Удалить"
                 Click="ButtonDeleteReceipt_Click" />

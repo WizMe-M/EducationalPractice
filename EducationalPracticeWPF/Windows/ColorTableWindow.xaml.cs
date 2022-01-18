@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,6 +63,23 @@ namespace EducationalPracticeWPF.Windows
             ColorDataGrid.CancelEdit();
             ColorDataGrid.CancelEdit();
             Application.Current.MainWindow!.Show();
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchTB.Text;
+            var filtered = new BindingList<Color>();
+            var colors = _database.Colors.Where(c => c.Naming.Contains(searchText));
+            
+            foreach (var color in colors)
+                filtered.Add(color);
+
+            ColorDataGrid.ItemsSource = filtered;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            ColorDataGrid.ItemsSource = _database.Colors.Local.ToBindingList();
         }
     }
 }
