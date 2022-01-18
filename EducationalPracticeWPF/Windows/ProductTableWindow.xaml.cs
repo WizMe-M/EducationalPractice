@@ -59,7 +59,16 @@ namespace EducationalPracticeWPF.Windows
         private async void ButtonDeleteProduct_Click(object sender, RoutedEventArgs e)
         {
             if (ProductDataGrid.SelectedItem is not Product selected) return;
-
+            
+            await _database.ProductsInReceipts.LoadAsync();
+            if (selected.ProductsInReceipts.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранный товар, поскольку он указан в чеке",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.Products.Remove(selected);
             await _database.SaveChangesAsync();
         }

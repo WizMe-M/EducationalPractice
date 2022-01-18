@@ -18,7 +18,6 @@ namespace EducationalPracticeWPF.Windows
             InitializeComponent();
             _database = new EducationalPracticeContext(options);
             _database.Receipts.Load();
-            _database.ProductsInReceipts.Load();
             _database.Customers.Load();
             _database.Employees.Load();
             _database.PaymentMethods.Load();
@@ -46,6 +45,22 @@ namespace EducationalPracticeWPF.Windows
             await _database.SaveChangesAsync();
         }
 
+        private async void ButtonAddProductsInReceipt_Click(object sender, RoutedEventArgs e)
+        {
+            if (ReceiptDataGrid.SelectedItem is not Receipt selected) return;
+
+            var addProductsWindow = new ProductsInReceiptWindow(_database, selected);
+            if (addProductsWindow.ShowDialog() == true)
+            {
+                selected.TotalSum = 0;
+                foreach (var productsInReceipt in selected.ProductsInReceipts)
+                    selected.TotalSum += productsInReceipt.ProductCount * productsInReceipt.Product.Price;
+
+                await _database.SaveChangesAsync();
+                ReceiptDataGrid.Items.Refresh();
+            }
+        }
+
         private async void ButtonEditReceipt_Click(object sender, RoutedEventArgs e)
         {
             if (ReceiptDataGrid.SelectedItem is not Receipt selected) return;
@@ -64,35 +79,19 @@ namespace EducationalPracticeWPF.Windows
         {
             if (ReceiptDataGrid.SelectedItem is not Receipt selected) return;
 
-            if (selected.ProductsInReceipts is not null)
+            await _database.ProductsInReceipts.LoadAsync();
+            if (selected.ProductsInReceipts.Count != 0)
             {
                 foreach (var productsInReceipt in _database.ProductsInReceipts)
                 {
                     if (productsInReceipt.Receipt != selected) continue;
                     _database.ProductsInReceipts.Remove(productsInReceipt);
                 }
-
                 await _database.SaveChangesAsync();
             }
 
             _database.Receipts.Remove(selected);
             await _database.SaveChangesAsync();
-        }
-
-        private async void ButtonAddProductsInReceipt_Click(object sender, RoutedEventArgs e)
-        {
-            if (ReceiptDataGrid.SelectedItem is not Receipt selected) return;
-
-            var addProductsWindow = new ProductsInReceiptWindow(_database, selected);
-            if (addProductsWindow.ShowDialog() == true)
-            {
-                selected.TotalSum = 0;
-                foreach (var productsInReceipt in selected.ProductsInReceipts)
-                    selected.TotalSum += productsInReceipt.ProductCount * productsInReceipt.Product.Price;
-
-                await _database.SaveChangesAsync();
-                ReceiptDataGrid.Items.Refresh();
-            }
         }
 
         private void ButtonSearch_Click(object sender, RoutedEventArgs e)

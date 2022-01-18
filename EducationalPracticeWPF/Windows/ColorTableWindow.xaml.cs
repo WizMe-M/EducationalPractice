@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using EducationalPracticeWPF.Models;
@@ -47,22 +46,17 @@ namespace EducationalPracticeWPF.Windows
         {
             if (ColorDataGrid.SelectedItem is not Color selected) return;
 
+            await _database.Products.LoadAsync();
+            if (selected.Products.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранный цвет, поскольку у него есть зависимые товары",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.Colors.Remove(selected);
             await _database.SaveChangesAsync();
-        }
-
-        private void ColorDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ColorDataGrid.SelectedItem is not Color selected) return;
-
-            ColorNamingTB.Text = selected.Naming;
-        }
-
-        private void ColorTableWindow_OnClosed(object? sender, EventArgs e)
-        {
-            ColorDataGrid.CancelEdit();
-            ColorDataGrid.CancelEdit();
-            Application.Current.MainWindow!.Show();
         }
 
         private void ButtonSearch_Click(object sender, RoutedEventArgs e)
@@ -80,6 +74,20 @@ namespace EducationalPracticeWPF.Windows
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
             ColorDataGrid.ItemsSource = _database.Colors.Local.ToBindingList();
+        }
+
+        private void ColorDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ColorDataGrid.SelectedItem is not Color selected) return;
+
+            ColorNamingTB.Text = selected.Naming;
+        }
+
+        private void ColorTableWindow_OnClosed(object? sender, EventArgs e)
+        {
+            ColorDataGrid.CancelEdit();
+            ColorDataGrid.CancelEdit();
+            Application.Current.MainWindow!.Show();
         }
     }
 }

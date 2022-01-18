@@ -71,7 +71,16 @@ namespace EducationalPracticeWPF.Windows
         private async void ButtonDeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
             if (EmployeeDataGrid.SelectedItem is not Employee selected) return;
-
+            
+            await _database.Receipts.LoadAsync();
+            if (selected.Receipts.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранного сотрудника, поскольку у него есть зависимые чеки",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.Employees.Remove(selected);
             await _database.SaveChangesAsync();
         }

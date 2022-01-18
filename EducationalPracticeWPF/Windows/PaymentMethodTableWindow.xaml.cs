@@ -43,6 +43,15 @@ namespace EducationalPracticeWPF.Windows
         {
             if (PaymentMethodDataGrid.SelectedItem is not PaymentMethod selected) return;
 
+            await _database.Receipts.LoadAsync();
+            if (selected.Receipts.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранный способ оплаты, поскольку у него есть зависимые чеки",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.PaymentMethods.Remove(selected);
             await _database.SaveChangesAsync();
         }

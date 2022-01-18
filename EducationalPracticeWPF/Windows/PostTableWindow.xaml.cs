@@ -13,13 +13,9 @@ namespace EducationalPracticeWPF.Windows
     {
         private readonly EducationalPracticeContext _database;
 
-        public PostTableWindow()
+        public PostTableWindow(DbContextOptions<EducationalPracticeContext> options)
         {
             InitializeComponent();
-        }
-
-        public PostTableWindow(DbContextOptions<EducationalPracticeContext> options) : this()
-        {
             _database = new EducationalPracticeContext(options);
             _database.Posts.Load();
             PostDataGrid.ItemsSource = _database.Posts.Local.ToBindingList();
@@ -53,6 +49,15 @@ namespace EducationalPracticeWPF.Windows
         {
             if (PostDataGrid.SelectedItem is not Post selected) return;
 
+            await _database.Employees.LoadAsync();
+            if (selected.Employees.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранную должность, поскольку у неё есть зависимые сотрудники",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.Posts.Remove(selected);
             await _database.SaveChangesAsync();
         }

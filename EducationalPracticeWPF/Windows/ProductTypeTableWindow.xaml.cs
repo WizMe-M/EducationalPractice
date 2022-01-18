@@ -12,13 +12,9 @@ namespace EducationalPracticeWPF.Windows
     {
         private readonly EducationalPracticeContext _database;
 
-        public ProductTypeTableWindow()
+        public ProductTypeTableWindow(DbContextOptions<EducationalPracticeContext> options)
         {
             InitializeComponent();
-        }
-
-        public ProductTypeTableWindow(DbContextOptions<EducationalPracticeContext> options) : this()
-        {
             _database = new EducationalPracticeContext(options);
             _database.ProductTypes.Load();
             ProductTypeDataGrid.ItemsSource = _database.ProductTypes.Local.ToBindingList();
@@ -49,6 +45,15 @@ namespace EducationalPracticeWPF.Windows
         {
             if (ProductTypeDataGrid.SelectedItem is not ProductType selected) return;
 
+            await _database.Posts.LoadAsync();
+            if (selected.Products.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранный вид товара, поскольку у него есть зависимые товары",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.ProductTypes.Remove(selected);
             await _database.SaveChangesAsync();
         }

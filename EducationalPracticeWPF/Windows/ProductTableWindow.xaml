@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Товары"
         Height="400"
-        Width="800"
+        Width="900"
         Closed="ProductTableWindow_OnClosed">
 
     <Window.Resources>

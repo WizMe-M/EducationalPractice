@@ -12,15 +12,12 @@ namespace EducationalPracticeWPF.Windows
     {
         private readonly EducationalPracticeContext _database;
 
-        public CustomerTableWindow()
+        public CustomerTableWindow(DbContextOptions<EducationalPracticeContext> options)
         {
             InitializeComponent();
-        }
-
-        public CustomerTableWindow(DbContextOptions<EducationalPracticeContext> options) : this()
-        {
             _database = new EducationalPracticeContext(options);
             _database.Customers.Load();
+            
             CustomerDataGrid.ItemsSource = _database.Customers.Local.ToBindingList();
         }
 
@@ -28,9 +25,9 @@ namespace EducationalPracticeWPF.Windows
         {
             var customer = new Customer
             {
-                FirstName = FirstNameTB.Text,
-                LastName = LastNameTB.Text,
-                Phone = PhoneTB.Text
+                FirstName = CustomerFirstNameTb.Text,
+                LastName = CustomerLastNameTb.Text,
+                Phone = CustomerPhoneTb.Text
             };
 
             _database.Customers.Add(customer);
@@ -41,9 +38,9 @@ namespace EducationalPracticeWPF.Windows
         {
             if (CustomerDataGrid.SelectedItem is not Customer selected) return;
 
-            selected.FirstName = FirstNameTB.Text;
-            selected.LastName = LastNameTB.Text;
-            selected.Phone = PhoneTB.Text;
+            selected.FirstName = CustomerFirstNameTb.Text;
+            selected.LastName = CustomerLastNameTb.Text;
+            selected.Phone = CustomerPhoneTb.Text;
 
             _database.Customers.Update(selected);
             await _database.SaveChangesAsync();
@@ -54,6 +51,15 @@ namespace EducationalPracticeWPF.Windows
         {
             if (CustomerDataGrid.SelectedItem is not Customer selected) return;
 
+            await _database.Receipts.LoadAsync();
+            if (selected.Receipts.Count != 0)
+            {
+                MessageBox.Show(
+                    "Невозможно удалить выбранного покупателя, поскольку у него есть зависимые чеки",
+                    "Удаление невозможно", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             _database.Customers.Remove(selected);
             await _database.SaveChangesAsync();
         }
@@ -62,9 +68,9 @@ namespace EducationalPracticeWPF.Windows
         {
             if (CustomerDataGrid.SelectedItem is not Customer selected) return;
 
-            FirstNameTB.Text = selected.FirstName;
-            LastNameTB.Text = selected.LastName;
-            PhoneTB.Text = selected.Phone;
+            CustomerFirstNameTb.Text = selected.FirstName;
+            CustomerLastNameTb.Text = selected.LastName;
+            CustomerPhoneTb.Text = selected.Phone;
         }
 
         private void CustomerTableWindow_OnClosed(object? sender, EventArgs e)
