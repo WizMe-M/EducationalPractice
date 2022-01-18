@@ -38,6 +38,13 @@ namespace EducationalPracticeWPF.Windows
             Hide();
         }
 
+        private void ButtonProduct_Click(object sender, RoutedEventArgs e)
+        {
+            var products = new ProductTableWindow(_options);
+            products.Show();
+            Hide();
+        }
+
         private void ButtonProductType_Click(object sender, RoutedEventArgs e)
         {
             var productTypes = new ProductTypeTableWindow(_options);
@@ -52,9 +59,16 @@ namespace EducationalPracticeWPF.Windows
             Hide();
         }
 
-        private void ButtonProduct_Click(object sender, RoutedEventArgs e)
+        private void ButtonPaymentMethod_Click(object sender, RoutedEventArgs e)
         {
-            var products = new ProductTableWindow(_options);
+            var paymentTypes = new PaymentMethodTableWindow(_options);
+            paymentTypes.Show();
+            Hide();
+        }
+
+        private void ButtonReceipt_Click(object sender, RoutedEventArgs e)
+        {
+            var products = new ReceiptTableWindow(_options);
             products.Show();
             Hide();
         }

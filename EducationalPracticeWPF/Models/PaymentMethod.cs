@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
-namespace EducationalPracticeWPF
+namespace EducationalPracticeWPF.Models
 {
     public partial class PaymentMethod
     {
@@ -15,6 +14,6 @@ namespace EducationalPracticeWPF
         public int Id { get; set; }
         public string Naming { get; set; }
 
-        public virtual ICollection<Receipt> Receipts { get; set; }
+        public ICollection<Receipt> Receipts { get; set; }
     }
 }

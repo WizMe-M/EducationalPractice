@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using EducationalPracticeWPF.Models;
 
 #nullable disable
 
-namespace EducationalPracticeWPF
+namespace EducationalPracticeWPF.Models
 {
-    public partial class Receipt
+    public class Receipt
     {
         public Receipt()
         {
@@ -20,9 +19,9 @@ namespace EducationalPracticeWPF
         public int EmployeeId { get; set; }
         public int PaymentMethodId { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual PaymentMethod PaymentMethod { get; set; }
-        public virtual ICollection<ProductsInReceipt> ProductsInReceipts { get; set; }
+        public Customer Customer { get; set; }
+        public Employee Employee { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
+        public ICollection<ProductsInReceipt> ProductsInReceipts { get; set; }
     }
 }

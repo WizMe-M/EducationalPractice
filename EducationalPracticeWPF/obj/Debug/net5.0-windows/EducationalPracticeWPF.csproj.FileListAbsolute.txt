@@ -72,3 +72,9 @@ C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-win
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ColorTableWindow.g.cs
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductTableWindow.g.cs
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductTableWindow.baml
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\PaymentMethodTableWindow.baml
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ReceiptTableWindow.baml
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\PaymentMethodTableWindow.g.cs
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ReceiptTableWindow.g.cs
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductsInReceiptWindow.baml
+C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\obj\Debug\net5.0-windows\Windows\ProductsInReceiptWindow.g.cs

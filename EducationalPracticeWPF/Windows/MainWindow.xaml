@@ -77,11 +77,13 @@
         
         <Button
             Grid.Row="7"
-            Content="Способы оплаты" />
+            Content="Способы оплаты" 
+            Click="ButtonPaymentMethod_Click"/>
         
         <Button
             Grid.Row="8"
-            Content="Чеки" />
+            Content="Чеки"
+            Click="ButtonReceipt_Click"/>
 
     </Grid>
 </Window>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 C:\RiderProjects\EducationalPractice\EducationalPracticeWPF\App.xaml
-71829786794
+10770090634
 
-20-185402813
+23-1339801780
 2141351651283
-Windows\ColorTableWindow.xaml;Windows\CustomerTableWindow.xaml;Windows\EmployeeTableWindow.xaml;Windows\MainWindow.xaml;Windows\PostTableWindow.xaml;Windows\ProductTableWindow.xaml;Windows\ProductTypeTableWindow.xaml;
+Windows\ColorTableWindow.xaml;Windows\CustomerTableWindow.xaml;Windows\EmployeeTableWindow.xaml;Windows\MainWindow.xaml;Windows\PaymentMethodTableWindow.xaml;Windows\PostTableWindow.xaml;Windows\ProductsInReceiptWindow.xaml;Windows\ProductTableWindow.xaml;Windows\ProductTypeTableWindow.xaml;Windows\ReceiptTableWindow.xaml;
 
-True
+False
 
